@@ -20,16 +20,18 @@ services:
       - db-store:/var/lib/mysql
 
   pma:
-    image: phpmyadmin/phpmyadmin:5.0.2
+    image: phpmyadmin/phpmyadmin
     environment:
+      - PMA_ARBITRARY=1
       - PMA_HOST=db
       - PMA_USER=phper
       - PMA_PASSWORD=secret
+    depends_on:
+      - db
     ports:
       - 8080:80
     volumes:
-      - pma-session-store:/sessions
+      - ./phpmyadmin/sessions:/sessions
 
 volumes:
   db-store:
-  pma-session-store:
